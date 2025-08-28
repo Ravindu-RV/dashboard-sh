@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - Student Hub</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      height: 100vh;
+      background: #f6f8fa;
+      color: #24292e;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 250px;
+      background: #24292e;
+      color: white;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .profile-pic {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      border: 3px solid #58a6ff;
+      margin-bottom: 10px;
+      object-fit: cover;
+    }
+
+    .username {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    .menu {
+      list-style: none;
+      width: 100%;
+    }
+
+    .menu li {
+      padding: 10px;
+      margin: 5px 0;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .menu li:hover {
+      background: #58a6ff;
+    }
+
+    /* Main content */
+    .main {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    .card {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .card1 {
+      background:#24292e;
+      color:white;
+      border-radius: 20px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      padding: 15px;
+      margin-bottom: 20px;
+    }
+    .card-grid {
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      padding:30px;
+      margin-bottom: 20px;
+      color:black;
+    }
+
+    .card h2 {
+      margin-bottom: 10px;
+    }
+
+    input[type="text"], input[type="file"] {
+      margin: 8px 0;
+      padding: 8px;
+      width: 100%;
+    }
+
+    /* Grid for overview cards */
+    .overview-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    button {
+      margin-top: 10px;
+      padding: 8px 12px;
+      background: #24292e;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #58a6ff;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <img src="https://via.placeholder.com/100" alt="Profile Picture" class="profile-pic" id="profilePic">
+    <div class="username" id="username">User</div>
+    <ul class="menu">
+      <li onclick="showSection('overview')">Overview</li>
+      <li onclick="showSection('projects')">Projects</li>
+      <li onclick="showSection('settings')">Settings</li>
+      <li onclick="logout()">Logout</li>
+    </ul>
+  </div>
+
+  <!-- Main content -->
+  <div class="main">
+    <!-- Overview -->
+    <div id="overview" class="card1">
+      <h1>Overview</h1>
+      <h2>Welcome to your Dashboard!</h2>
+      <p>You have entered the Student Hub. Here you can improve your knowledge in ICT, completely free.</p>  
+
+      <br><br>
+      <div class="overview-grid">
+        <!-- Card 1: Profile Info -->
+        <div class="card-grid">
+          <h3>Profile Info</h3>
+          <p id="welcomeText">Welcome to your dashboard!</p>
+          <img id="welcomePic" src="https://via.placeholder.com/100" 
+               alt="Profile Picture" style="width:80px;height:80px;border-radius:50%;margin:10px 0;">
+          <p id="profileInfo">Username: User</p>
+        </div>
+
+        <!-- Card 2: Recent Projects -->
+        <div class="card-grid">
+          <h3>Recent Projects</h3>
+          <ul>
+            <li>Student Hub Website</li>
+            <li>Math Graphing Tool</li>
+            <li>Personal Portfolio</li>
+          </ul>
+        </div>
+
+        <!-- Card 3: Notifications -->
+        <div class="card-grid">
+          <h3>Notifications</h3>
+          <ul>
+            <li>✅ Profile updated successfully</li>
+            <li>📌 New project added</li>
+            <li>💬 You have 2 new messages</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Projects -->
+    <div id="projects" class="card" style="display:none;">
+      <h2>Your Projects</h2>
+      <ul>
+        <li>Student Hub Website</li>
+        <li>Math Graphing Tool</li>
+        <li>Personal Portfolio</li>
+      </ul>
+    </div>
+
+    <!-- Settings -->
+    <div id="settings" class="card" style="display:none;">
+      <h2>Profile Settings</h2>
+      <label>Change Username:</label>
+      <input type="text" id="newUsername" placeholder="Enter new username">
+      
+      <label>Change Profile Picture:</label>
+      <input type="file" id="newProfilePic" accept="image/*">
+      
+      <button onclick="updateProfile()">Save Changes</button>
+    </div>
+  </div>
+
+  <script>
+   // On load
+document.addEventListener("DOMContentLoaded", () => {
+  const savedUser = localStorage.getItem("username") || "User";
+  const savedPic = localStorage.getItem("profilePic") || "https://via.placeholder.com/100";
+
+  // update sidebar
+  document.getElementById("username").innerText = savedUser;
+  document.getElementById("profilePic").src = savedPic;
+
+  // update overview card
+  document.getElementById("welcomeText").innerText = `Welcome, ${savedUser}! 🎉`;
+  document.getElementById("welcomePic").src = savedPic;
+  document.getElementById("profileInfo").innerText = `Username: ${savedUser}`;
+
+  // show overview by default
+  showSection("overview");
+});
+
+// Switch dashboard sections
+function showSection(sectionId) {
+  document.querySelectorAll('.main > div').forEach(section => {
+    section.style.display = "none"; // hide all
+  });
+  document.getElementById(sectionId).style.display = "block"; // show selected
+}
+
+// Update profile
+function updateProfile() {
+  const newUser = document.getElementById("newUsername").value.trim();
+  const fileInput = document.getElementById("newProfilePic");
+
+  if (newUser) {
+    localStorage.setItem("username", newUser);
+  }
+
+  if (fileInput.files && fileInput.files[0]) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      localStorage.setItem("profilePic", e.target.result);
+      location.reload();
+    };
+    reader.readAsDataURL(fileInput.files[0]);
+  } else {
+    location.reload();
+  }
+}
+
+// Logout
+function logout() {
+  localStorage.clear();
+  alert("Logged out!");
+  location.reload();
+}
+  </script>
+
+</body>
+</html>
