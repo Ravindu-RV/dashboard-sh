@@ -44,17 +44,23 @@
     .menu {
       list-style: none;
       width: 100%;
+      padding: 0;
     }
 
     .menu li {
-      padding: 10px;
       margin: 5px 0;
+    }
+
+    .menu li a {
+      display: block;
+      padding: 10px;
       border-radius: 6px;
-      cursor: pointer;
+      color: white;
+      text-decoration: none;
       transition: background 0.2s;
     }
 
-    .menu li:hover {
+    .menu li a:hover {
       background: #58a6ff;
     }
 
@@ -89,10 +95,6 @@
       color:black;
     }
 
-    .card h2 {
-      margin-bottom: 10px;
-    }
-
     input[type="text"], input[type="file"] {
       margin: 8px 0;
       padding: 8px;
@@ -119,20 +121,22 @@
     button:hover {
       background: #58a6ff;
     }
+
     .logo {
-    width: 60px;
-    height: 60px;
-    border-radius: 15px;
-    background: linear-gradient(135deg, var(--accent), black);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-weight: 700;
-    font-size:30px;}
-   .tiny{font-size:12px;color:var(--muted)}
-   .btn.secondary{border:0px solid rgba(79,70,229,12)}
-    
+      width: 60px;
+      height: 60px;
+      border-radius: 15px;
+      background: linear-gradient(135deg, #58a6ff, black);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+      font-size: 16px;
+      text-align: center;
+      line-height: 1.2;
+    }
+    .tiny{font-size:12px;color:gray}
   </style>
 </head>
 <body>
@@ -142,10 +146,10 @@
     <img src="https://via.placeholder.com/100" alt="Profile Picture" class="profile-pic" id="profilePic">
     <div class="username" id="username">User</div>
     <ul class="menu">
-      <li onclick="showSection('overview')">Overview</li>
-      <li onclick="showSection('projects')">Projects</li>
-      <li onclick="showSection('settings')">Settings</li>
-      <li onclick="logout()">Logout</li>
+      <li><a href="#" onclick="showSection('overview')">Overview</a></li>
+      <li><a href="#" onclick="showSection('projects')">Projects</a></li>
+      <li><a href="#" onclick="showSection('settings')">Settings</a></li>
+      <li><a href="#" onclick="logout()">Logout</a></li>
     </ul>
   </div>
 
@@ -168,12 +172,13 @@
           <p id="profileInfo">Username: User</p>
         </div>
 
-        <!-- Card 2: Recent Projects -->
+        <!-- Card 2: Code Maker -->
         <div class="card-grid">
-          <h3> Code Maker</h3>
+          <h3>Code Maker</h3>
           <div class="logo">SH<br>Code</div>
-        <div>
-          <div style="font-weight:1000; font-size:20px;><a href="https://ravindu-rv.github.io/RV-Code-maker/">Student Hub Code</a></div>
+          <div style="font-weight:1000; font-size:20px;">
+            <a href="https://ravindu-rv.github.io/RV-Code-maker/" target="_blank">Student Hub Code</a>
+          </div>
           <div class="tiny">Open-source starter (HTML • CSS • JS)</div>
           <div class="tiny">ICT With Ravindu</div>
           <ul>
@@ -276,5 +281,3 @@ function logout() {
 
 </body>
 </html>
-
-
